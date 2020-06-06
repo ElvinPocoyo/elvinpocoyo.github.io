@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <style>
+      .board{
+        border-radius: 25px;
+        background: #87CEFA;
+        color: #fff;
+        padding: 20px;
+        height: 150px;
+      }
+
+      .page{
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body class="col-12 col-sm-12">
+
+  <div id="dashboard-section" class="page">
+    <div class="container text-center">
+      <button type="button" class="btn btn-primary vertical-center" onclick="showCantSayConditionSection()">DO NOT DO IT CHALLENGE</button>
+    </div>
+  </div>
+
+  <div id="cant-say-condition-section" class="page" style="display:none;">
+    <div class="container text-center">
+      <button type="button" class="btn btn-primary" onclick="showCantSaySection(1)">With Life</button>
+      <br />
+      <br />
+      <button type="button" class="btn btn-primary" onclick="showCantSaySection(2)">Without Life</button>
+    </div>
+  </div>
+
+  <div id="life-page-section" class="page" style="display: none;">
+    <div class=form-group>
+      <label>Life Count: </label>
+      <input class="form-control" type="text" id="lifeValue" />
+    </div>
+    <button type="button" class="btn btn-primary" onClick="setLifeCount()">Submit</button>
+  </div>
+
+  <div id="cant-say-section" class="page" style="display:none;">
+    <div id="life-bar-section" class="d-flex flex-row" value="0"style="display:none;">
+    </div>
+    <div class="d-flex flex-row board">
+      <div id="mission" class="col-12 col-sm-12 display-1 d-flex justify-content-center">任务</div>
+    </div>
+    <div id="countdown" class="col-12 col-sm-12 d-flex justify-content-center"></div>
+    <br />
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" onclick="getNextWord()">下一个</button>
+    </div>
+  </div>
+
+
+  </body>
+</html>
+
+<script>
+  function showCantSayConditionSection() {
+    document.getElementById("dashboard-section").style.display = "none";
+    document.getElementById("cant-say-condition-section").style.display = "block";
+  }
+
+  function showCantSaySection(val) {
+    document.getElementById("cant-say-condition-section").style.display = "none";
+
+    if (val === 1) {
+      document.getElementById("life-page-section").style.display = "block";
+    } else {
+      document.getElementById("cant-say-section").style.display = "block";
+    }
+  }
+
+  function setLifeCount(){
+    document.getElementById("life-page-section").style.display = "none";
+    document.getElementById("cant-say-section").style.display = "block";
+
+    let life = document.getElementById("lifeValue").value;
+    document.getElementById("life-bar-section").style.display = "block";
+    document.getElementById("life-bar-section").innerHTML = "Life Count: " + life;
+    document.getElementById("life-bar-section").value = life;
+  }
+
+  function getNextWord() {    
+    var timeleft = 3;
+
+    var downloadTimer = setInterval(function function1() {
+      document.getElementById("countdown").innerHTML = timeleft + 
+      "&nbsp"+"seconds remaining";
+
+      let randomWord = [
+        "说为什么", 
+        "向上看",
+        "说明星名",
+        "传东西",
+        "说脏话",
+        "手指别人",
+        "大笑",
+        "说不懂",
+        "举手",
+        "拍打别人",
+        "讲人坏话",
+        "击掌",
+        "说你们",
+        "唱歌",
+        "讲英文",
+        "说可以",
+        "说没有",
+        "道歉",
+        "说数字",
+        "表示同意",
+        "说不要",
+        "说人名",
+        "摸头发",
+        "说好的",
+        "手放桌上",
+        "提问",
+        "回答问题",
+        "点头",
+        "鼓掌",
+        "摸鼻子",
+        "打赌",
+        "说谢谢",
+        "夸自己",
+        "称赞别人",
+        "拒绝别人",
+        "说年龄",
+        "回头看",
+        "握手",
+        "回忆",
+        "摇头",
+        "拿杯子",
+        "说不信",
+        "摸嘴唇",
+        "说不会",
+        "说轮到你",
+        "聊工作",
+        "联盟",
+        "说大声点",
+        "大叫",
+        "讨论玩法",
+        "手放腿上",
+        "说不是",
+        "吃东西",
+        "聊天气"
+      ];
+
+      timeleft -= 1;
+      if(timeleft <= 0) {
+        clearInterval(downloadTimer);
+
+        document.getElementById("mission").innerHTML=randomWord[Math.floor(Math.random()* randomWord.length)];
+
+        document.getElementById("countdown").innerHTML = "";
+
+        let lifeCount = document.getElementById("life-bar-section").value;
+        if (lifeCount !== undefined && lifeCount !== 0){
+          let newLifeCount = lifeCount - 1;
+          document.getElementById("life-bar-section").value = newLifeCount;
+          document.getElementById("life-bar-section").innerHTML = "Life Count: " + newLifeCount;
+        }
+      }
+    }, 1000);
+  }
+</script>
